@@ -1,0 +1,500 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: API specification for Jeunesse CI
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: categories
+    description: Main topic categories
+  - name: guides
+    description: Step-by-step guidance journeys
+  - name: resources
+    description: Organizations and resources
+  - name: news
+    description: Youth news and opportunities
+  - name: stats
+    description: Platform statistics
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /categories:
+    get:
+      operationId: listCategories
+      tags: [categories]
+      summary: List all main categories
+      responses:
+        "200":
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /categories/{id}:
+    get:
+      operationId: getCategory
+      tags: [categories]
+      summary: Get a category by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Category detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /guides:
+    get:
+      operationId: listGuides
+      tags: [guides]
+      summary: List all guides, optionally filtered by category
+      parameters:
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of guides
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Guide"
+
+  /guides/{id}:
+    get:
+      operationId: getGuide
+      tags: [guides]
+      summary: Get a guide with full steps
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Guide with steps
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuideDetail"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /resources:
+    get:
+      operationId: listResources
+      tags: [resources]
+      summary: List resources, optionally filtered by category
+      parameters:
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+        - name: type
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of resources
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Resource"
+
+  /resources/{id}:
+    get:
+      operationId: getResource
+      tags: [resources]
+      summary: Get a resource by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Resource detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resource"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /news:
+    get:
+      operationId: listNews
+      tags: [news]
+      summary: List news and opportunities
+      parameters:
+        - name: categoryId
+          in: query
+          schema:
+            type: integer
+        - name: type
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of news items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsItem"
+
+  /news/{id}:
+    get:
+      operationId: getNewsItem
+      tags: [news]
+      summary: Get a news item by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: News item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsItem"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /stats/summary:
+    get:
+      operationId: getStatsSummary
+      tags: [stats]
+      summary: Platform summary stats
+      responses:
+        "200":
+          description: Summary statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatsSummary"
+
+  /guides/featured:
+    get:
+      operationId: listFeaturedGuides
+      tags: [guides]
+      summary: List featured/popular guides
+      responses:
+        "200":
+          description: Featured guides
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Guide"
+
+  /news/featured:
+    get:
+      operationId: listFeaturedNews
+      tags: [news]
+      summary: List featured/recent news
+      responses:
+        "200":
+          description: Featured news
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/NewsItem"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        slug:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        icon:
+          type: string
+        color:
+          type: string
+        guideCount:
+          type: integer
+        resourceCount:
+          type: integer
+      required:
+        - id
+        - slug
+        - name
+        - description
+        - icon
+        - color
+
+    Guide:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        title:
+          type: string
+        summary:
+          type: string
+        stepCount:
+          type: integer
+        duration:
+          type: string
+        difficulty:
+          type: string
+        isFeatured:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - categoryId
+        - title
+        - summary
+        - stepCount
+        - duration
+        - difficulty
+
+    GuideStep:
+      type: object
+      properties:
+        id:
+          type: integer
+        guideId:
+          type: integer
+        order:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        tips:
+          type: array
+          items:
+            type: string
+        documents:
+          type: array
+          items:
+            type: string
+        relatedResourceIds:
+          type: array
+          items:
+            type: integer
+      required:
+        - id
+        - guideId
+        - order
+        - title
+        - description
+
+    GuideDetail:
+      allOf:
+        - $ref: "#/components/schemas/Guide"
+        - type: object
+          properties:
+            steps:
+              type: array
+              items:
+                $ref: "#/components/schemas/GuideStep"
+          required:
+            - steps
+
+    Resource:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        phone:
+          type: string
+        email:
+          type: string
+        website:
+          type: string
+        services:
+          type: array
+          items:
+            type: string
+        openingHours:
+          type: string
+      required:
+        - id
+        - categoryId
+        - name
+        - description
+        - type
+        - city
+
+    NewsItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        categoryId:
+          type: integer
+        title:
+          type: string
+        summary:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+        publishedAt:
+          type: string
+        deadline:
+          type: string
+        source:
+          type: string
+        isFeatured:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - categoryId
+        - title
+        - summary
+        - type
+        - publishedAt
+
+    StatsSummary:
+      type: object
+      properties:
+        totalGuides:
+          type: integer
+        totalResources:
+          type: integer
+        totalNews:
+          type: integer
+        totalCategories:
+          type: integer
+        guidesByCategory:
+          type: array
+          items:
+            type: object
+            properties:
+              categoryId:
+                type: integer
+              categoryName:
+                type: string
+              count:
+                type: integer
+            required:
+              - categoryId
+              - categoryName
+              - count
+        resourcesByType:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              count:
+                type: integer
+            required:
+              - type
+              - count
+      required:
+        - totalGuides
+        - totalResources
+        - totalNews
+        - totalCategories
+        - guidesByCategory
+        - resourcesByType

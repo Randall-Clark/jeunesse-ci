@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Jeunesse CI"
+version = "1.0.0"
+id = "artifacts/jeunesse-ci"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24398
+
+[services.development]
+run = "pnpm --filter @workspace/jeunesse-ci run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/jeunesse-ci", "run", "build" ]
+publicDir = "artifacts/jeunesse-ci/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24398"
+BASE_PATH = "/"
