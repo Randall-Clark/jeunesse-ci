@@ -5,7 +5,6 @@ import { ArrowLeft, Clock, ChevronDown, ChevronUp, FileText, Lightbulb, CheckCir
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Layout } from "@/components/layout";
 import { LoadingState, ErrorState } from "@/components/ui/states";
 import { useGetGuide, getGetGuideQueryKey } from "@workspace/api-client-react";
@@ -38,8 +37,6 @@ export default function GuideDetailPage() {
       return next;
     });
   };
-
-  const progress = guide?.steps ? Math.round((completedSteps.size / guide.steps.length) * 100) : 0;
 
   return (
     <Layout>
@@ -84,29 +81,6 @@ export default function GuideDetailPage() {
               )}
             </motion.div>
 
-            {/* Progress Tracker */}
-            {guide.steps && guide.steps.length > 0 && (
-              <Card className="mb-8 border-primary/20 bg-primary/5">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-display font-bold">Ta progression</span>
-                    <span className="text-sm text-muted-foreground">
-                      {completedSteps.size} / {guide.steps.length} étapes
-                    </span>
-                  </div>
-                  <Progress value={progress} className="h-2" />
-                  {progress === 100 && (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className="text-sm text-green-700 font-medium mt-3 flex items-center gap-2"
-                    >
-                      <CheckCircle2 className="w-4 h-4" /> Félicitations, tu as complété toutes les étapes !
-                    </motion.p>
-                  )}
-                </CardContent>
-              </Card>
-            )}
 
             {/* Steps */}
             {guide.steps && guide.steps.length > 0 && (
@@ -131,9 +105,9 @@ export default function GuideDetailPage() {
                             : "border-border hover:border-primary/20"
                         }`}
                       >
-                        <button
+                        <div
                           onClick={() => toggleStep(index)}
-                          className="w-full text-left p-6 flex items-center gap-4"
+                          className="w-full text-left p-6 flex items-center gap-4 cursor-pointer"
                         >
                           <button
                             onClick={(e) => toggleComplete(index, e)}
@@ -159,7 +133,7 @@ export default function GuideDetailPage() {
                           ) : (
                             <ChevronDown className="w-5 h-5 text-muted-foreground flex-shrink-0" />
                           )}
-                        </button>
+                        </div>
 
                         <AnimatePresence>
                           {isExpanded && (

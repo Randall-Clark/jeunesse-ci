@@ -45,10 +45,10 @@ function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 text-primary font-display font-bold text-xl tracking-tight">
-          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-            J
+          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+            R
           </div>
-          Jeunesse CI
+          RIJA
         </Link>
 
         {/* Desktop Nav */}
@@ -119,13 +119,13 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <Link href="/" className="flex items-center gap-2 text-primary font-display font-bold text-xl tracking-tight mb-4">
-              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-                J
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-bold">
+                R
               </div>
-              Jeunesse CI
+              RIJA
             </Link>
-            <p className="text-muted-foreground max-w-sm">
-              Ton guide numérique pour naviguer les décisions importantes de ta vie en Côte d'Ivoire. Découvre, apprends et réussis.
+            <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
+              Réseau Information pour la Jeunesse Africaine. Guides pratiques, ressources officielles et opportunités pour t'aider à construire ton avenir.
             </p>
           </div>
           <div>
@@ -170,8 +170,8 @@ function Footer() {
           </div>
         </div>
         <div className="border-t mt-12 pt-8 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} Jeunesse CI. Tous droits réservés.</p>
-          <p className="mt-2 md:mt-0">Fait avec passion à Abidjan.</p>
+          <p>© {new Date().getFullYear()} RIJA — Réseau Information pour la Jeunesse Africaine. Tous droits réservés.</p>
+          <p className="mt-2 md:mt-0">Fait avec passion pour la jeunesse africaine.</p>
         </div>
       </div>
     </footer>

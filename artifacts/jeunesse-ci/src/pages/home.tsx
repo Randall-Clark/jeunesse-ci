@@ -70,14 +70,14 @@ export default function HomePage() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <Badge className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30 text-sm px-4 py-1">
-              Plateforme d'orientation pour la jeunesse ivoirienne
+              Réseau Information pour la Jeunesse Africaine
             </Badge>
             <h1 className="font-display text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
               Ton avenir commence<br />
               <span className="text-white/80">par la bonne information</span>
             </h1>
             <p className="text-white/75 text-lg md:text-xl max-w-2xl mx-auto mb-10">
-              Guides pratiques, ressources officielles et actualités pour t'aider à prendre les meilleures décisions — entrepreneuriat, emploi, formation, santé et droits.
+              RIJA t'accompagne avec des guides pratiques, des ressources officielles et des opportunités pour prendre les meilleures décisions — entrepreneuriat, emploi, formation, santé et droits.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold text-base px-8 h-12">
